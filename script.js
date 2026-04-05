@@ -121,13 +121,20 @@ async function showResults() {
     // Salvar resposta do usuário antes de exibir resultados
     await saveUserResponse();
 
-    // Carregar candidatos do Firebase se disponível
+    // Carregar candidatos do Firebase ou Google Sheets se disponível
     if (typeof firebaseManager !== 'undefined' && firebaseManager.enabled) {
         const firebaseCandidates = await firebaseManager.getCandidates();
         if (firebaseCandidates.length > 0) {
             candidates = firebaseCandidates;
             await db.saveCandidates(candidates);
             console.log(`✅ Atualizados ${candidates.length} candidatos do Firebase`);
+        }
+    } else if (typeof googleSheetsManager !== 'undefined' && googleSheetsManager.enabled) {
+        const sheetsCandidates = await googleSheetsManager.getCandidates();
+        if (sheetsCandidates.length > 0) {
+            candidates = sheetsCandidates;
+            await db.saveCandidates(candidates);
+            console.log(`✅ Atualizados ${candidates.length} candidatos do Google Sheets`);
         }
     }
 
@@ -265,8 +272,13 @@ async function saveUserResponse() {
         await db.saveUsers(users);
         console.log('✅ Resposta do usuário salva no IndexedDB');
 
+        // Tentar salvar no Firebase primeiro
         if (typeof firebaseManager !== 'undefined' && firebaseManager.enabled) {
             await firebaseManager.saveUserResponse(userEntry);
+        }
+        // Se Firebase não estiver disponível, tentar Google Sheets
+        else if (typeof googleSheetsManager !== 'undefined' && googleSheetsManager.enabled) {
+            await googleSheetsManager.saveUserResponse(userEntry);
         }
     } catch (e) {
         console.error('❌ Erro ao salvar resposta do usuário:', e);

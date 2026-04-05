@@ -110,6 +110,8 @@ async function saveCandidate() {
             await db.saveCandidates(candidates);
             if (typeof firebaseManager !== 'undefined' && firebaseManager.enabled) {
                 await firebaseManager.saveCandidate(candidateData);
+            } else if (typeof googleSheetsManager !== 'undefined' && googleSheetsManager.enabled) {
+                await googleSheetsManager.saveCandidate(candidateData);
             }
             alert('✅ Candidato salvo com sucesso!\n\nValor salvo em: ' + new Date().toLocaleString('pt-BR'));
             

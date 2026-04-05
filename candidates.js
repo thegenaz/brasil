@@ -13,6 +13,13 @@ async function initCandidates() {
                 console.log(`✅ ${candidates.length} candidatos carregados do Firebase`);
                 return;
             }
+        } else if (typeof googleSheetsManager !== 'undefined' && googleSheetsManager.enabled) {
+            const sheetsCandidates = await googleSheetsManager.getCandidates();
+            if (sheetsCandidates.length > 0) {
+                candidates = sheetsCandidates;
+                console.log(`✅ ${candidates.length} candidatos carregados do Google Sheets`);
+                return;
+            }
         }
 
         // Carregar do IndexedDB quando não há candidatos no Firebase
