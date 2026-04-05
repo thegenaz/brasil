@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Político - Brasil</title>
+    <link rel="stylesheet" href="style.css?v=5">
+    <script src="database.js?v=1"></script>
+    <script src="data-backup.js?v=1"></script>
+    <script src="github-sync.js?v=1"></script>
+    <script src="config.js?v=1"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="start-screen" class="screen">
+            <div id="election-icon">🗳️</div>
+            <h1>Eleição para o Congresso Brasileiro</h1>
+            <p id="intro-description">Este quiz foi criado para ajudar você a identificar quais candidatos possuem maior afinidade com suas opiniões dentro do jogo.<br><br>O questionário é composto por 15 afirmações, que devem ser respondidas em uma escala de 1 a 5, de "discordo totalmente" a "concordo totalmente".<br><br>Ao final, o sistema analisará suas respostas e apresentará os 3 candidatos mais alinhados com você, com base na similaridade percentual entre as respostas.<br><br>A proposta é simples: facilitar sua escolha e tornar o processo mais dinâmico, transparente e interativo.</p>
+            <button id="start-btn">Começar Teste</button>
+        </div>
+        <div id="quiz-screen" class="screen hidden">
+            <div id="progress">Pergunta <span id="current-question">1</span> de 15</div>
+            <div id="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+            <div id="question-container">
+                <p id="question-category"></p>
+                <h2 id="question-text"></h2>
+                <div id="answers">
+                    <label class="answer-option">
+                        <input type="radio" name="answer" value="1">
+                        <span>1 - Discordo totalmente</span>
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="answer" value="2">
+                        <span>2 - Discordo</span>
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="answer" value="3">
+                        <span>3 - Neutro</span>
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="answer" value="4">
+                        <span>4 - Concordo</span>
+                    </label>
+                    <label class="answer-option">
+                        <input type="radio" name="answer" value="5">
+                        <span>5 - Concordo totalmente</span>
+                    </label>
+                </div>
+            </div>
+            <div id="quiz-navigation">
+                <button id="prev-btn" disabled>⬅️ Voltar</button>
+                <button id="next-btn" disabled>Próxima ➡️</button>
+                <button id="save-progress-btn" style="display: none;">💾 Salvar Progresso</button>
+            </div>
+        </div>
+        <div id="result-screen" class="screen hidden">
+            <h1>Seu Perfil Ideológico</h1>
+            <p id="ideology-profile"></p>
+            <h2>Compatibilidade com Candidatos</h2>
+            <div id="candidates-ranking"></div>
+            <button id="restart-btn">Refazer</button>
+        </div>
+        <div id="footer-links">
+            <a href="apuracao/">Apuração</a>
+        </div>
+    </div>
+    <script src="data-backup.js?v=1"></script>
+    <script src="questions.js?v=4"></script>
+    <script src="candidates.js?v=4"></script>
+    <script src="ideology.js?v=4"></script>
+    <script src="script.js?v=4"></script>
+</body>
+</html>
