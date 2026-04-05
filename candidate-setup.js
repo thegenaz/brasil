@@ -100,13 +100,17 @@ async function saveCandidate() {
         try {
             await db.init();
             const candidates = await db.getCandidates();
-            candidates.push({ 
-                name, 
+            const candidateData = {
+                name,
                 answers: userAnswers,
                 savedAt: new Date().toISOString()
-            });
+            };
+            candidates.push(candidateData);
             
             await db.saveCandidates(candidates);
+            if (typeof firebaseManager !== 'undefined' && firebaseManager.enabled) {
+                await firebaseManager.saveCandidate(candidateData);
+            }
             alert('✅ Candidato salvo com sucesso!\n\nValor salvo em: ' + new Date().toLocaleString('pt-BR'));
             
             // Limpar progresso após salvar com sucesso
